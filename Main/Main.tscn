@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnijl43yyuw31"]
+
+[ext_resource type="Script" uid="uid://cd6ahb331f1ww" path="res://Main/PlayBtn.cs" id="1_83ytx"]
+[ext_resource type="Script" uid="uid://b7viglrcpocrh" path="res://Main/QuitBtn.cs" id="2_amygn"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PlayBtn" type="Button" parent="."]
+offset_left = 385.0
+offset_top = 200.0
+offset_right = 647.0
+offset_bottom = 284.0
+text = "Play"
+script = ExtResource("1_83ytx")
+
+[node name="QuitBtn" type="Button" parent="."]
+offset_left = 387.0
+offset_top = 336.0
+offset_right = 649.0
+offset_bottom = 420.0
+text = "Quit"
+script = ExtResource("2_amygn")

@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://bo1053lkdokkw"]
+
+[ext_resource type="PackedScene" uid="uid://brkwc7ma5vm6g" path="res://Player/player.tscn" id="1_62w18"]
+[ext_resource type="Script" uid="uid://bix12ialg52a3" path="res://World/World.cs" id="1_k8do8"]
+[ext_resource type="Texture2D" uid="uid://exaw1bd070u5" path="res://World/Assets/bg-world.jpg" id="2_8a836"]
+[ext_resource type="Script" uid="uid://dexcwi87mobx2" path="res://World/SpaceBg.cs" id="2_j8job"]
+[ext_resource type="Script" uid="uid://cit5nqs22los6" path="res://World/ScreenBoundary.cs" id="4_3f78f"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_62w18"]
+distance = -327.25
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8a836"]
+normal = Vector2(0, 1)
+distance = -255.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
+size = Vector2(1377, 791)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_k8do8")
+
+[node name="Player" parent="." instance=ExtResource("1_62w18")]
+position = Vector2(567, 410)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 192
+collision_mask = 0
+
+[node name="BottomBound" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(570, 289)
+shape = SubResource("WorldBoundaryShape2D_62w18")
+
+[node name="TopBound" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(570, 290)
+shape = SubResource("WorldBoundaryShape2D_8a836")
+
+[node name="BG" type="ParallaxBackground" parent="."]
+
+[node name="SpaceBG" type="ParallaxLayer" parent="BG"]
+motion_mirroring = Vector2(1500, 1000)
+script = ExtResource("2_j8job")
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/SpaceBG"]
+position = Vector2(569, 289)
+scale = Vector2(0.512792, 0.511016)
+texture = ExtResource("2_8a836")
+
+[node name="ScreenBoundary" type="Area2D" parent="."]
+script = ExtResource("4_3f78f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBoundary"]
+position = Vector2(584.5, 331.5)
+shape = SubResource("RectangleShape2D_j8job")

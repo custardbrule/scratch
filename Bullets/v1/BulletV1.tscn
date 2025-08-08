@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwlv1xsx0l6wb"]
+
+[ext_resource type="Script" uid="uid://cpm6dgqyj8r1r" path="res://Bullets/v1/BulletV1.cs" id="1_wi4ft"]
+[ext_resource type="Texture2D" uid="uid://bvhi1vh4urtxa" path="res://Bullets/Lasers/laserBlue15.png" id="2_wi4ft"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wi4ft"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wi4ft"]
+
+[node name="BulletV1" type="RigidBody2D"]
+collision_mask = 12
+physics_material_override = SubResource("PhysicsMaterial_wi4ft")
+gravity_scale = 0.0
+script = ExtResource("1_wi4ft")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 1)
+shape = SubResource("CapsuleShape2D_wi4ft")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 0.5)
+texture = ExtResource("2_wi4ft")

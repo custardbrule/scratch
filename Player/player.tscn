@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://brkwc7ma5vm6g"]
+
+[ext_resource type="Script" uid="uid://b75krd310l001" path="res://Player/Player.cs" id="1_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://cqmchsctgk0vx" path="res://Player/kenney_simple-space/PNG/Default/ship_H.png" id="2_btcbx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4flbx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sh265"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_btcbx")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 192
+collision_mask = 254
+script = ExtResource("1_4ntmi")
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CapsuleShape2D_4flbx")
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.400879, 0.439941)
+sprite_frames = SubResource("SpriteFrames_sh265")
+animation = &"Idle"
