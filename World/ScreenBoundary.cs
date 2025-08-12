@@ -1,17 +1,24 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class ScreenBoundary : Area2D
 {
 	public override void _Ready()
 	{
 		// Connect signal
+
 		BodyExited += OnBodyExited;
 	}
-	
+
 	private void OnBodyExited(Node2D body)
 	{
-		if (body is BaseBullet bullet) bullet.QueueFree();
-		if (body is Meteor meteor) meteor.QueueFree();
+		switch (body)
+		{
+			case BaseBullet:
+			case BaseMeteor:
+				body.QueueFree();
+				break;
+			default: break;
+		}
 	}
 }

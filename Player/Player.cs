@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class Player : CharacterBody2D
 {
@@ -12,15 +12,11 @@ public partial class Player : CharacterBody2D
 	private Vector2 _lastDirection = Vector2.Zero;
 
 	// flags
+
 	public bool IsShooting { get; set; }
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion mouseMotion)
-		{
-			LookAt(GetGlobalMousePosition());
-		}
-
 		if (@event is InputEventMouseButton)
 		{
 			if (Input.IsMouseButtonPressed(MouseButton.Left)) IsShooting = true;
@@ -42,14 +38,18 @@ public partial class Player : CharacterBody2D
 		var direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		var spawnPosition = GlobalPosition + direction * 20.0f; // Spawn away from ship
 
+
 		var bullet = BulletFactory.CreateBullet<BulletV1>(spawnPosition, direction);
 		// Add bullet to the scene tree
+
 		if (bullet is not null) GetTree().CurrentScene.AddChild(bullet);
 	}
 
 	private void MoveHandler(double delta)
 	{
 		Vector2 velocity = Velocity;
+
+		LookAt(GetGlobalMousePosition());
 
 		var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		if (direction != Vector2.Zero)

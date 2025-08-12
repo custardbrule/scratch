@@ -21,10 +21,11 @@ script = ExtResource("1_k8do8")
 
 [node name="Player" parent="." instance=ExtResource("1_62w18")]
 position = Vector2(567, 410)
+motion_mode = 1
+platform_on_leave = 2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 192
-collision_mask = 0
 
 [node name="BottomBound" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(570, 289)
@@ -46,6 +47,7 @@ scale = Vector2(0.500396, 0.504882)
 texture = ExtResource("2_8a836")
 
 [node name="ScreenBoundary" type="Area2D" parent="."]
+collision_mask = 193
 script = ExtResource("4_3f78f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBoundary"]

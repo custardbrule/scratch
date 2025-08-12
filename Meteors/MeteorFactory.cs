@@ -1,38 +1,26 @@
 using System;
+using System.Linq;
 using Godot;
-
-public partial class Meteor: RigidBody2D {}
 
 public static class MeteorFactory
 {
     public const string GroupName = "meteors";
-    public static Meteor CreateMeteor(Vector2 position, Vector2 direction)
+
+    private static PackedScene meteorScene1 = GD.Load<PackedScene>("res://Meteors/M1/Meteor_1.tscn");
+
+    public static T CreateMeteor<T>(Vector2 position, Vector2 direction) where T : BaseMeteor
     {
-        // load img
-        var img = ResourceLoader.Load<CompressedTexture2D>("res://Meteors/Assets/Rocks/rock-1.png");
-
-        // create sprite
-        var sprite = new Sprite2D();
-        sprite.Texture = img;
-        sprite.Scale = new Vector2(0.2f, 0.2f);
-
-        // create RigidBody2D
-        var body = new Meteor
+        T m = typeof(T) switch
         {
-            GravityScale = 0.0f,
-            Position = position,
-            LinearVelocity = direction * 100.0f  // Set velocity instead
+            var v1 when v1 == typeof(Meteor1) => meteorScene1.Instantiate<T>(),
+            _ => null
         };
-        body.AddChild(sprite);
-        body.AddToGroup(GroupName);
 
+        m.Initialize(position, direction);
+        m.Resie(new Vector2(0.2f, 0.2f));
 
-        body.SetCollisionLayerValue(7, true);
-        body.SetCollisionLayerValue(8, true);
+        m.AddToGroup(GroupName);
 
-        body.SetCollisionMaskValue(7, true);
-        body.SetCollisionMaskValue(8, true);
-
-        return body;
+        return m;
     }
 }

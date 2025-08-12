@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d34edd8eu2h3r"]
+
+[ext_resource type="Script" uid="uid://b2w1wyfc3wxbn" path="res://Meteors/M1/Meteor1.cs" id="1_ay64i"]
+[ext_resource type="Texture2D" uid="uid://356mfnppvly6" path="res://Meteors/Assets/Rocks/rock-1.png" id="1_jdyef"]
+
+[node name="Meteor1" type="RigidBody2D"]
+collision_layer = 192
+collision_mask = 192
+script = ExtResource("1_ay64i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jdyef")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(514, -52, 509, 57, 382, 192, 234, 249, 120, 298, 3, 309, -210, 280, -327, 259, -485, 122, -524, 52, -472, -57, -487, -109, -474, -158, -280, -249, -114, -285, 73, -306, 216, -270, 296, -298, 400, -231, 423, -179, 475, -176, 506, -125)
