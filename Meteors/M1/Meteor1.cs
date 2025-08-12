@@ -20,7 +20,7 @@ public partial class Meteor1 : BaseMeteor
 		}
 	}
 
-	public override void Resie(Vector2 scale)
+	public override void Resize(Vector2 scale)
 	{
 		sprite2D.Scale = scale;
 		collisionPolygon2D.Scale = scale;

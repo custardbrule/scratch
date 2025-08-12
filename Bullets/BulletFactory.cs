@@ -18,6 +18,7 @@ public static class BulletFactory
         };
 
         bullet?.Initialize(position, direction);
+        bullet?.AddToGroup(GroupName);
         return bullet;
     }
 
