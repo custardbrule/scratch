@@ -14,7 +14,7 @@ normal = Vector2(0, 1)
 distance = -255.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
-size = Vector2(1377, 791)
+size = Vector2(1501, 993)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_k8do8")
@@ -41,13 +41,13 @@ motion_mirroring = Vector2(1500, 1000)
 script = ExtResource("2_j8job")
 
 [node name="Sprite2D" type="Sprite2D" parent="BG/SpaceBG"]
-position = Vector2(569, 289)
-scale = Vector2(0.512792, 0.511016)
+position = Vector2(570.406, 301.875)
+scale = Vector2(0.500396, 0.504882)
 texture = ExtResource("2_8a836")
 
 [node name="ScreenBoundary" type="Area2D" parent="."]
 script = ExtResource("4_3f78f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBoundary"]
-position = Vector2(584.5, 331.5)
+position = Vector2(569.5, 297.5)
 shape = SubResource("RectangleShape2D_j8job")

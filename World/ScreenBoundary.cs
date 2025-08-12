@@ -12,5 +12,6 @@ public partial class ScreenBoundary : Area2D
 	private void OnBodyExited(Node2D body)
 	{
 		if (body is BaseBullet bullet) bullet.QueueFree();
+		if (body is Meteor meteor) meteor.QueueFree();
 	}
 }

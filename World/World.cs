@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 public partial class World : Node2D
 {
@@ -20,5 +22,10 @@ public partial class World : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (GetTree().GetNodesInGroup(MeteorFactory.GroupName).Count() < 1)
+		{
+			var meteor = MeteorFactory.CreateMeteor(GetGlobalMousePosition(), new Vector2(1, 0));
+			AddChild(meteor);
+		}
 	}
 }

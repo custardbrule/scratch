@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class BulletFactory
+public static class BulletFactory
 {
     private static double lastFireTime = 0.0;
 
