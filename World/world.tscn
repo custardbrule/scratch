@@ -1,41 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://bo1053lkdokkw"]
+[gd_scene load_steps=5 format=3 uid="uid://bo1053lkdokkw"]
 
 [ext_resource type="PackedScene" uid="uid://brkwc7ma5vm6g" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="Script" uid="uid://bix12ialg52a3" path="res://World/World.cs" id="1_k8do8"]
 [ext_resource type="Texture2D" uid="uid://exaw1bd070u5" path="res://World/Assets/bg-world.jpg" id="2_8a836"]
 [ext_resource type="Script" uid="uid://dexcwi87mobx2" path="res://World/SpaceBg.cs" id="2_j8job"]
-[ext_resource type="Script" uid="uid://cit5nqs22los6" path="res://World/ScreenBoundary.cs" id="4_3f78f"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_62w18"]
-distance = -327.25
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8a836"]
-normal = Vector2(0, 1)
-distance = -255.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8job"]
-size = Vector2(1501, 993)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_k8do8")
 
 [node name="Player" parent="." instance=ExtResource("1_62w18")]
-position = Vector2(567, 410)
+position = Vector2(580, 327)
 collision_mask = 128
 motion_mode = 1
 platform_on_leave = 2
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 128
-collision_mask = 0
-
-[node name="BottomBound" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(570, 289)
-shape = SubResource("WorldBoundaryShape2D_62w18")
-
-[node name="TopBound" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(570, 290)
-shape = SubResource("WorldBoundaryShape2D_8a836")
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 1.0
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 2.0
 
 [node name="BG" type="ParallaxBackground" parent="."]
 
@@ -47,11 +31,3 @@ script = ExtResource("2_j8job")
 position = Vector2(570.406, 301.875)
 scale = Vector2(0.500396, 0.504882)
 texture = ExtResource("2_8a836")
-
-[node name="ScreenBoundary" type="Area2D" parent="."]
-collision_mask = 193
-script = ExtResource("4_3f78f")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBoundary"]
-position = Vector2(569.5, 297.5)
-shape = SubResource("RectangleShape2D_j8job")
