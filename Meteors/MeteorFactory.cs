@@ -19,11 +19,10 @@ public static class MeteorFactory
 
         if (m is null) return null;
 
-        var rsize = RNG.RandfRange(0.2f, 0.45f);
+        var rsize = RNG.RandfRange(0.1f, 0.3f);
         var rmass = RNG.RandfRange(500f, 1000f);
         m.Initialize(position, direction, rmass, new Vector2(rsize, rsize));
         m.Resize(new Vector2(rsize, rsize));
-
         m.AddToGroup(GroupName);
 
         return m;

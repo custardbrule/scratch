@@ -6,7 +6,6 @@ public partial class BulletV1 : BaseBullet
 	public new static float FireRate { get; set; } = 500.0f;
 	public override float Speed { get; set; } = 800.0f;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		base._Ready();
@@ -15,9 +14,17 @@ public partial class BulletV1 : BaseBullet
 		Rotate(MathF.PI / 2);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
+		base._PhysicsProcess(delta);
+
+		var collisionInfo = MoveAndCollide(LinearVelocity * (float)delta);
+		if (collisionInfo is not null)
+		{
+			var collider = (Node)collisionInfo.GetCollider();
+			collider.QueueFree();
+			LinearVelocity = LinearVelocity.Bounce(collisionInfo.GetNormal());
+		}
 	}
 
 	public override void HitTarget(Node target)

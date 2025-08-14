@@ -8,7 +8,7 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wi4ft"]
 
 [node name="BulletV1" type="RigidBody2D"]
-collision_mask = 12
+collision_mask = 204
 mass = 25.0
 physics_material_override = SubResource("PhysicsMaterial_wi4ft")
 gravity_scale = 0.0
