@@ -1,9 +1,10 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class BulletV1 : BaseBullet
 {
 	public new static float FireRate { get; set; } = 500.0f;
+	public override int Damage { get; set; } = 100;
 	public override float Speed { get; set; } = 800.0f;
 
 	public override void _Ready()
@@ -19,17 +20,26 @@ public partial class BulletV1 : BaseBullet
 		base._PhysicsProcess(delta);
 
 		var collisionInfo = MoveAndCollide(LinearVelocity * (float)delta);
-		if (collisionInfo is not null)
-		{
-			var collider = (Node)collisionInfo.GetCollider();
-			collider.QueueFree();
-			LinearVelocity = LinearVelocity.Bounce(collisionInfo.GetNormal());
-		}
+		if (collisionInfo is not null) HitTarget(collisionInfo, (float)delta);
 	}
 
-	public override void HitTarget(Node target)
+	private void HitTarget(KinematicCollision2D collisionInfo, float delta)
 	{
-		throw new NotImplementedException();
-	}
+		var target = collisionInfo.GetCollider();
+		var remain = collisionInfo.GetRemainder();
 
+		// Calculate the impulse (change in momentum)
+		var impulse = Mass * remain / delta;
+
+		switch (target)
+		{
+			case BaseMeteor meteor:
+				meteor.ApplyForce(impulse);
+				meteor.HeathPoint -= Damage;
+				break;
+			default: break;
+		}
+
+		QueueFree();
+	}
 }

@@ -8,12 +8,14 @@ public static class BulletFactory
 
     // Bullet scenes
     private static PackedScene bulletSceneV1 = GD.Load<PackedScene>("res://Bullets/v1/BulletV1.tscn");
+    private static PackedScene bulletSceneV2 = GD.Load<PackedScene>("res://Bullets/v2/BulletV2.tscn");
 
     public static T CreateBullet<T>(Vector2 position, Vector2 direction) where T : BaseBullet
     {
         T bullet = typeof(T) switch
         {
             var v1 when v1 == typeof(BulletV1) && AllowFire(BulletV1.FireRate) => bulletSceneV1.Instantiate<T>(),
+            var v2 when v2 == typeof(BulletV2) && AllowFire(BulletV2.FireRate) => bulletSceneV2.Instantiate<T>(),
             _ => null
         };
 

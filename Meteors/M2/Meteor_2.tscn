@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://7ybvtjvqyemm"]
+
+[ext_resource type="Script" uid="uid://yykciejugrfk" path="res://Meteors/M2/Meteor2.cs" id="1_e8prl"]
+[ext_resource type="Texture2D" uid="uid://qxyrayidj0ke" path="res://Meteors/Assets/Rocks/rock-2.png" id="1_m8s0o"]
+[ext_resource type="Texture2D" uid="uid://dyl1jbv2dl1sk" path="res://Meteors/Assets/smoke-explode-animation-sprite-sheet-vfx-steam/2204_w053_n004_37b_p1_37-removebg-preview.png" id="2_727pt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8prl"]
+atlas = ExtResource("2_727pt")
+region = Rect2(5, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tohn"]
+atlas = ExtResource("2_727pt")
+region = Rect2(156, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gohhd"]
+atlas = ExtResource("2_727pt")
+region = Rect2(307, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbonj"]
+atlas = ExtResource("2_727pt")
+region = Rect2(458, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axct8"]
+atlas = ExtResource("2_727pt")
+region = Rect2(609, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjb05"]
+atlas = ExtResource("2_727pt")
+region = Rect2(760, 12, 151, 195)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qirjn"]
+atlas = ExtResource("2_727pt")
+region = Rect2(911, 12, 151, 195)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xp8cl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_m8s0o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8prl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tohn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gohhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbonj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axct8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjb05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qirjn")
+}],
+"loop": false,
+"name": &"destroyed",
+"speed": 5.0
+}]
+
+[node name="Meteor2" type="RigidBody2D"]
+collision_layer = 128
+collision_mask = 192
+script = ExtResource("1_e8prl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-3.00001, -2.00001)
+scale = Vector2(1, 0.978)
+polygon = PackedVector2Array(214, 95.092, 238, 87.9346, 247, 65.4397, 247, 47.0348, 254, 31.6974, 244, -25.5624, 226, -49.0797, 198, -63.3947, 180, -81.7996, 129, -114.519, 93, -130.879, 79, -142.127, 45, -159.509, 26, -155.419, -32, -135.992, -50, -134.969, -73, -142.127, -104, -137.014, -112, -126.789, -139, -118.609, -154, -98.1595, -194, -81.7996, -222, -42.9448, -227, -31.6973, -246, -16.3599, -241, 39.8773, -196, 73.6196, -169, 78.7321, -153, 72.5971, -108, 111.452, -93, 115.542, -79, 138.037, -35, 157.464, -4.99999, 162.577, 35, 153.374, 64, 153.374, 161, 116.564, 178, 102.249, 213, 96.1145)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.999996, 3.8147e-06)
+scale = Vector2(2.03597, 1.55543)
+sprite_frames = SubResource("SpriteFrames_xp8cl")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs0vxvq0aex56"]
+
+[ext_resource type="Script" uid="uid://d3or4fnyh7iah" path="res://Bullets/V2/BulletV2.cs" id="1_pajf0"]
+[ext_resource type="Texture2D" uid="uid://bh6qt3ohgdy47" path="res://Bullets/Lasers/laserBlue08.png" id="1_q1osv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pajf0"]
+radius = 14.0
+
+[node name="BulletV2" type="RigidBody2D"]
+collision_mask = 204
+mass = 200.0
+gravity_scale = 0.0
+script = ExtResource("1_pajf0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_pajf0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q1osv")

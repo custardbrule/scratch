@@ -47,7 +47,13 @@ public partial class World : Node2D
 			var position = GetRandomPointOutsideCamera();
 			var direction = player.GlobalPosition - position;
 			var noiseDirection = direction.Rotated(rng.RandfRange(-1f, 1f));
-			var meteor = MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection);
+			var t = rng.RandiRange(1, 8);
+			BaseMeteor meteor = t switch
+			{
+				1 => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
+				2 => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
+				_ => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
+			};
 			AddChild(meteor);
 		}
 	}
@@ -56,49 +62,49 @@ public partial class World : Node2D
 	{
 		var camera = GetViewport().GetCamera2D();
 		if (camera == null) return Vector2.Zero;
-		
+
 		var viewport = GetViewport();
 		var screenSize = viewport.GetVisibleRect().Size;
 		var zoom = camera.Zoom;
 		var visibleSize = screenSize / zoom;
 		var cameraPos = camera.GlobalPosition;
-		
+
 		// Define margin outside camera view
 		float margin = 200f;
-		
+
 		// Random side: 0=top, 1=right, 2=bottom, 3=left
 		int side = rng.RandiRange(0, 3);
-		
+
 		Vector2 randomPoint;
-		
+
 		switch (side)
 		{
 			case 0: // Top
 				randomPoint = new Vector2(
-					rng.RandfRange(cameraPos.X - visibleSize.X/2 - margin, cameraPos.X + visibleSize.X/2 + margin),
-					cameraPos.Y - visibleSize.Y/2 - rng.RandfRange(margin, margin * 3)
+					rng.RandfRange(cameraPos.X - visibleSize.X / 2 - margin, cameraPos.X + visibleSize.X / 2 + margin),
+					cameraPos.Y - visibleSize.Y / 2 - rng.RandfRange(margin, margin * 3)
 				);
 				break;
 			case 1: // Right
 				randomPoint = new Vector2(
-					cameraPos.X + visibleSize.X/2 + rng.RandfRange(margin, margin * 3),
-					rng.RandfRange(cameraPos.Y - visibleSize.Y/2 - margin, cameraPos.Y + visibleSize.Y/2 + margin)
+					cameraPos.X + visibleSize.X / 2 + rng.RandfRange(margin, margin * 3),
+					rng.RandfRange(cameraPos.Y - visibleSize.Y / 2 - margin, cameraPos.Y + visibleSize.Y / 2 + margin)
 				);
 				break;
 			case 2: // Bottom
 				randomPoint = new Vector2(
-					rng.RandfRange(cameraPos.X - visibleSize.X/2 - margin, cameraPos.X + visibleSize.X/2 + margin),
-					cameraPos.Y + visibleSize.Y/2 + rng.RandfRange(margin, margin * 3)
+					rng.RandfRange(cameraPos.X - visibleSize.X / 2 - margin, cameraPos.X + visibleSize.X / 2 + margin),
+					cameraPos.Y + visibleSize.Y / 2 + rng.RandfRange(margin, margin * 3)
 				);
 				break;
 			default: // Left
 				randomPoint = new Vector2(
-					cameraPos.X - visibleSize.X/2 - rng.RandfRange(margin, margin * 3),
-					rng.RandfRange(cameraPos.Y - visibleSize.Y/2 - margin, cameraPos.Y + visibleSize.Y/2 + margin)
+					cameraPos.X - visibleSize.X / 2 - rng.RandfRange(margin, margin * 3),
+					rng.RandfRange(cameraPos.Y - visibleSize.Y / 2 - margin, cameraPos.Y + visibleSize.Y / 2 + margin)
 				);
 				break;
 		}
-		
+
 		return randomPoint;
 	}
 }

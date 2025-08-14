@@ -10,17 +10,31 @@ public partial class Player : CharacterBody2D
 
 	private float _curentSpeed = 0.0f;
 	private Vector2 _lastDirection = Vector2.Zero;
+	private int[] _weapons = [1, 2];
+	private int _currentWeapon { get; set; } = 0;
 
 	// flags
-
 	public bool IsShooting { get; set; }
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouseButton)
+		switch (@event)
 		{
-			if (Input.IsMouseButtonPressed(MouseButton.Left)) IsShooting = true;
-			else IsShooting = false;
+			case InputEventKey inputEventKey when inputEventKey.IsActionPressed("change_weapon_left"):
+			case InputEventMouseButton inputEventMouseButton when inputEventMouseButton.IsActionPressed("change_weapon_left"):
+				if (_currentWeapon == 0) _currentWeapon = _weapons.Length - 1;
+				else _currentWeapon -= 1;
+				break;
+			case InputEventKey inputEventKey when inputEventKey.IsActionPressed("change_weapon_right"):
+			case InputEventMouseButton inputEventMouseButton when inputEventMouseButton.IsActionPressed("change_weapon_right"):
+				if (_currentWeapon == _weapons.Length - 1) _currentWeapon = 0;
+				else _currentWeapon += 1;
+				break;
+			case InputEventMouseButton:
+				if (Input.IsMouseButtonPressed(MouseButton.Left)) IsShooting = true;
+				else IsShooting = false;
+				break;
+			default: break;
 		}
 	}
 
@@ -38,8 +52,12 @@ public partial class Player : CharacterBody2D
 		var direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		var spawnPosition = GlobalPosition + direction * 20.0f; // Spawn away from ship
 
-
-		var bullet = BulletFactory.CreateBullet<BulletV1>(spawnPosition, direction);
+		BaseBullet bullet = _weapons[_currentWeapon] switch
+		{
+			1 => BulletFactory.CreateBullet<BulletV1>(spawnPosition, direction),
+			2 => BulletFactory.CreateBullet<BulletV2>(spawnPosition, direction),
+			_ => null
+		};
 		// Add bullet to the scene tree
 
 		if (bullet is not null) GetTree().CurrentScene.AddChild(bullet);

@@ -4,6 +4,14 @@ using Godot;
 public partial class Meteor1 : BaseMeteor
 {
 	[Export] public float MaxDistanceFromCamera = 1500f;
+	public override float HeathPoint
+	{
+		get => base.HeathPoint; set
+		{
+			if (value <= 0) HandleDestroyed();
+			base.HeathPoint = value;
+		}
+	}
 
 	private Camera2D camera
 	{
@@ -49,5 +57,10 @@ public partial class Meteor1 : BaseMeteor
 	{
 		sprite2D.Scale = scale;
 		collisionPolygon2D.Scale = scale;
+	}
+
+	private void HandleDestroyed()
+	{
+		QueueFree();
 	}
 }
