@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://clil8i3ij5e3h"]
+
+[ext_resource type="Script" uid="uid://c1pp5nvuo6fe5" path="res://Enemies/V1/EnemyV1.cs" id="1_sbs0h"]
+[ext_resource type="Texture2D" uid="uid://r0t2t3it4llu" path="res://Enemies/Assets/kenney_space-shooter-redux/PNG/playerShip1_red.png" id="1_vg06p"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbs0h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vg06p"]
+
+[node name="EnemyV1" type="CharacterBody2D"]
+collision_layer = 76
+collision_mask = 192
+motion_mode = 1
+script = ExtResource("1_sbs0h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_sbs0h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.385, 0.385)
+texture = ExtResource("1_vg06p")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 205
+
+[node name="DetectionLayer" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(16.7, 16.7)
+shape = SubResource("CircleShape2D_vg06p")

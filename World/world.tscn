@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo1053lkdokkw"]
+[gd_scene load_steps=8 format=3 uid="uid://bo1053lkdokkw"]
 
 [ext_resource type="PackedScene" uid="uid://brkwc7ma5vm6g" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="Script" uid="uid://bix12ialg52a3" path="res://World/World.cs" id="1_k8do8"]
 [ext_resource type="Texture2D" uid="uid://exaw1bd070u5" path="res://World/Assets/bg-world.jpg" id="2_8a836"]
 [ext_resource type="Script" uid="uid://dexcwi87mobx2" path="res://World/SpaceBg.cs" id="2_j8job"]
 [ext_resource type="Script" uid="uid://8e604vcwjhag" path="res://World/BulletBoundary.cs" id="5_k8do8"]
+[ext_resource type="PackedScene" uid="uid://clil8i3ij5e3h" path="res://Enemies/V1/EnemyV1.tscn" id="6_bkhv4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3f78f"]
 size = Vector2(1327, 821)
@@ -43,3 +44,6 @@ script = ExtResource("5_k8do8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletBoundary"]
 position = Vector2(580, 327)
 shape = SubResource("RectangleShape2D_3f78f")
+
+[node name="EnemyV1" parent="." instance=ExtResource("6_bkhv4")]
+position = Vector2(863, 317)
