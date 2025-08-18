@@ -37,6 +37,10 @@ public partial class BulletV1 : BaseBullet
 				meteor.ApplyForce(impulse);
 				meteor.HeathPoint -= Damage;
 				break;
+			case IHeathPoint heathPoint:
+				if(target.HasMethod("ApplyForce")) target.Call("ApplyForce", impulse);
+				heathPoint.HeathPoint -= Damage;
+				break;
 			default: break;
 		}
 

@@ -21,10 +21,10 @@ rotation = 1.5708
 scale = Vector2(0.385, 0.385)
 texture = ExtResource("1_vg06p")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="MeteorDetection" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 205
 
-[node name="DetectionLayer" type="CollisionShape2D" parent="Area2D"]
+[node name="DetectionLayer" type="CollisionShape2D" parent="MeteorDetection"]
 scale = Vector2(16.7, 16.7)
 shape = SubResource("CircleShape2D_vg06p")
