@@ -30,11 +30,12 @@ public partial class BulletV2 : BaseBullet
 		// Calculate the impulse (change in momentum)
 		var impulse = Mass * remain / delta;
 
+		// Godot object and naming convention
 		switch (target)
 		{
-			case BaseMeteor meteor:
-				meteor.ApplyForce(impulse);
-				meteor.HeathPoint -= Damage;
+			case IHeathPoint heathPoint:
+				if (target.HasMethod("apply_impulse")) target.Call("apply_impulse", impulse);
+				heathPoint.OnHeathChange(Damage);
 				break;
 			default: break;
 		}

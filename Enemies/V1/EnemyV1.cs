@@ -1,7 +1,7 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 {
@@ -13,7 +13,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 	public const float PlayerWeight = 1.0f;
 	public const float AvoidanceWeight = 2.0f;
 
-	public float HeathPoint { get; set; } = 3000.0f;
+	public float HeathPoint { get; private set; }
 
 	private float _curentSpeed = 0.0f;
 	private Vector2 _lastDirection = Vector2.Zero;
@@ -25,6 +25,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 	public override void _Ready()
 	{
 		base._Ready();
+		HeathPoint = 3000.0f;
 		_player = GetTree().CurrentScene.GetNode<Player>("Player");
 		_meteorDetectionLayer.BodyEntered += MeteorEntered;
 		_meteorDetectionLayer.BodyExited += MeteorExited;
@@ -38,32 +39,41 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 		LookAt(_player.GlobalPosition);
 
 		// Calculate direction forces (normalized vectors)
+
 		var seekDirection = CalculateSeekDirection();
 		var avoidanceDirection = CalculateMeteorAvoidance();
-		
+
 		// Combine the forces
-		var combinedDirection = (seekDirection * PlayerWeight + avoidanceDirection * AvoidanceWeight);
-		
+
+		var combinedDirection = seekDirection * PlayerWeight + avoidanceDirection * AvoidanceWeight;
+
 		// Check if we have conflicting forces
+
 		var dot = seekDirection.Dot(avoidanceDirection);
 		bool forcesConflict = dot < -0.5f; // Forces pointing in opposite directions
+
 		bool hasStrongAvoidance = avoidanceDirection.Length() > 0.5f;
-		
+
+
 		var velocity = Velocity;
 
 		if (!forcesConflict || hasStrongAvoidance)
 		{
 			// Safe to move - either no conflict or need to dodge
+
 			var desiredDirection = combinedDirection.Normalized();
-			
+
+
 			if (_lastDirection.Dot(desiredDirection) < 0.8f)
 			{
 				// Sharp direction change - reset speed
+
 				_curentSpeed = Speed;
 			}
 			else
 			{
 				// Gradual acceleration
+
 				_curentSpeed = MathF.Min(_curentSpeed + AccelerationRate * (float)delta, MaxSpeed);
 			}
 
@@ -74,6 +84,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 		else
 		{
 			// Forces conflict strongly - decelerate
+
 			if (_curentSpeed > 0.0f)
 			{
 				_curentSpeed = MathF.Max(_curentSpeed - DecelerationRate * (float)delta, 0.0f);
@@ -83,6 +94,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 			else
 			{
 				// Stopped - prepare for new movement
+
 				_lastDirection = Vector2.Zero;
 				velocity = velocity.MoveToward(Vector2.Zero, DecelerationRate * (float)delta);
 			}
@@ -100,7 +112,8 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 
 	private Vector2 CalculateMeteorAvoidance()
 	{
-		if (_meteors.Count == 0) 
+		if (_meteors.Count == 0)
+
 			return Vector2.Zero;
 
 		var avoidanceForce = Vector2.Zero;
@@ -108,40 +121,50 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 		foreach (var meteor in _meteors)
 		{
 			if (!IsInstanceValid(meteor)) continue;
-			
+
+
 			var toMeteor = meteor.GlobalPosition - GlobalPosition;
 			var distance = toMeteor.Length();
-			
+
+
 			if (distance > 0 && distance < 150.0f) // Avoidance range
 			{
 				// Basic avoidance - move away from meteor
+
 				var avoidDirection = -toMeteor.Normalized();
-				
+
 				// Stronger avoidance for closer meteors
+
 				var strength = (150.0f - distance) / 150.0f;
-				
+
 				// Predict meteor movement
+
 				var meteorVelocity = meteor.LinearVelocity;
 				if (meteorVelocity.Length() > 0)
 				{
 					// Calculate where meteor will be
+
 					var timeToImpact = distance / (_curentSpeed + 0.1f);
 					var predictedPosition = meteor.GlobalPosition + meteorVelocity * timeToImpact;
 					var toPredicted = predictedPosition - GlobalPosition;
-					
+
 					// If predicted collision, strengthen avoidance
+
 					if (toPredicted.Length() < distance)
 					{
 						avoidDirection = -toPredicted.Normalized();
 						strength *= 1.5f; // Boost avoidance for predicted collisions
+
 					}
 				}
-				
+
+
 				avoidanceForce += avoidDirection * strength * AvoidanceStrength;
 			}
 		}
 
 		// Normalize the combined avoidance force
+
 		return avoidanceForce.Length() > 0 ? avoidanceForce.Normalized() : Vector2.Zero;
 	}
 
@@ -159,5 +182,11 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 		{
 			_meteors.Remove(meteor);
 		}
+	}
+
+	public void OnHeathChange(float damage)
+	{
+		HeathPoint -= damage;
+		if (HeathPoint <= 0) QueueFree();
 	}
 }

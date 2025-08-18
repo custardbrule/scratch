@@ -52,7 +52,7 @@ public partial class World : Node2D
 			{
 				1 => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
 				2 => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
-				_ => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
+				_ => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
 			};
 			AddChild(meteor);
 		}

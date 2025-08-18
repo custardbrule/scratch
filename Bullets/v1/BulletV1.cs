@@ -33,13 +33,9 @@ public partial class BulletV1 : BaseBullet
 
 		switch (target)
 		{
-			case BaseMeteor meteor:
-				meteor.ApplyForce(impulse);
-				meteor.HeathPoint -= Damage;
-				break;
 			case IHeathPoint heathPoint:
-				if(target.HasMethod("ApplyForce")) target.Call("ApplyForce", impulse);
-				heathPoint.HeathPoint -= Damage;
+				if (target.HasMethod("apply_force")) target.Call("apply_force", impulse);
+				heathPoint.OnHeathChange(Damage);
 				break;
 			default: break;
 		}

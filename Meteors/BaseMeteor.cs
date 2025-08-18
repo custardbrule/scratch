@@ -6,7 +6,6 @@ public abstract partial class BaseMeteor : RigidBody2D
     [Export] public virtual float RotateSpeed { get; set; } = 0.5f;
     [Export] public virtual float Speed { get; set; } = 500.0f;
     [Export] public virtual int Damage { get; set; } = 10;
-    [Export] public virtual float HeathPoint { get; set; } = 0;
 
     protected readonly RandomNumberGenerator rng = new RandomNumberGenerator();
 
@@ -21,7 +20,6 @@ public abstract partial class BaseMeteor : RigidBody2D
         RotateSpeed -= RotateSpeed * noise;
         GlobalPosition = startPos;
         LinearVelocity = targetDirection.Normalized() * Speed;
-        if (HeathPoint == 0) HeathPoint = Mass * 10;
     }
 
     public abstract void Resize(Vector2 scale);

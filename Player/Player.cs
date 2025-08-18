@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, IHeathPoint
 {
 	public const float Speed = 200.0f;
 	public const float MaxSpeed = 500.0f;
@@ -15,6 +15,8 @@ public partial class Player : CharacterBody2D
 
 	// flags
 	public bool IsShooting { get; set; }
+
+	public float HeathPoint { get; set; } = 100;
 
 	public override void _Input(InputEvent @event)
 	{
@@ -97,4 +99,11 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 	}
+
+	public void OnHeathChange(float damage)
+	{
+		HeathPoint -= damage;
+		if (HeathPoint <= 0) GetTree().ChangeSceneToFile("res://Main/Main.tscn");
+	}
+
 }
