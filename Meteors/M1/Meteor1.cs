@@ -11,7 +11,7 @@ public partial class Meteor1 : BaseMeteor, IHeathPoint
 	{
 		get
 		{
-			return GetViewport().GetCamera2D();
+			return GetViewport()?.GetCamera2D();
 		}
 	}
 	public override float Speed { get; set; } = 100.0f;

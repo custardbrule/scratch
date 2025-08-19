@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://clil8i3ij5e3h"]
+[gd_scene load_steps=7 format=3 uid="uid://clil8i3ij5e3h"]
 
 [ext_resource type="Script" uid="uid://c1pp5nvuo6fe5" path="res://Enemies/V1/EnemyV1.cs" id="1_sbs0h"]
 [ext_resource type="Texture2D" uid="uid://r0t2t3it4llu" path="res://Enemies/Assets/kenney_space-shooter-redux/PNG/playerShip1_red.png" id="1_vg06p"]
+[ext_resource type="Texture2D" uid="uid://dhj0nx8qkilbg" path="res://Enemies/Assets/heathbar-empty.png" id="3_louwk"]
+[ext_resource type="Texture2D" uid="uid://b81o1g8e353tr" path="res://Enemies/Assets/heathbar.png" id="3_xjc5p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbs0h"]
 
@@ -14,10 +16,10 @@ motion_mode = 1
 script = ExtResource("1_sbs0h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_sbs0h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.5708
 scale = Vector2(0.385, 0.385)
 texture = ExtResource("1_vg06p")
 
@@ -28,3 +30,12 @@ collision_mask = 205
 [node name="DetectionLayer" type="CollisionShape2D" parent="MeteorDetection"]
 scale = Vector2(16.7, 16.7)
 shape = SubResource("CircleShape2D_vg06p")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -28.0
+offset_top = 27.0
+offset_right = 325.0
+offset_bottom = 79.0
+scale = Vector2(0.165, 0.165)
+texture_under = ExtResource("3_louwk")
+texture_progress = ExtResource("3_xjc5p")

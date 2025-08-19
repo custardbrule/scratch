@@ -14,9 +14,12 @@ public partial class Player : CharacterBody2D, IHeathPoint
 	private int _currentWeapon { get; set; } = 0;
 
 	// flags
-	public bool IsShooting { get; set; }
+	private bool _isShooting { get; set; }
 
 	public float HeathPoint { get; set; } = 100;
+
+	// signals
+	private PlayerSignals _playerSignals => GetNode<PlayerSignals>("/root/PlayerSignals");
 
 	public override void _Input(InputEvent @event)
 	{
@@ -33,8 +36,8 @@ public partial class Player : CharacterBody2D, IHeathPoint
 				else _currentWeapon += 1;
 				break;
 			case InputEventMouseButton:
-				if (Input.IsMouseButtonPressed(MouseButton.Left)) IsShooting = true;
-				else IsShooting = false;
+				if (Input.IsMouseButtonPressed(MouseButton.Left)) _isShooting = true;
+				else _isShooting = false;
 				break;
 			default: break;
 		}
@@ -49,7 +52,7 @@ public partial class Player : CharacterBody2D, IHeathPoint
 
 	private void ShootingHandler(double delta)
 	{
-		if (!IsShooting) return;
+		if (!_isShooting) return;
 
 		var direction = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		var spawnPosition = GlobalPosition + direction * 20.0f; // Spawn away from ship
@@ -103,6 +106,7 @@ public partial class Player : CharacterBody2D, IHeathPoint
 	public void OnHeathChange(float damage)
 	{
 		HeathPoint -= damage;
+		_playerSignals.EmitSignal(nameof(_playerSignals.PlayerHeathUpdate), HeathPoint);
 		if (HeathPoint <= 0) GetTree().ChangeSceneToFile("res://Main/Main.tscn");
 	}
 

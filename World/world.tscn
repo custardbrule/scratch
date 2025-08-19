@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bo1053lkdokkw"]
+[gd_scene load_steps=11 format=3 uid="uid://bo1053lkdokkw"]
 
 [ext_resource type="PackedScene" uid="uid://brkwc7ma5vm6g" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="Script" uid="uid://bix12ialg52a3" path="res://World/World.cs" id="1_k8do8"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" uid="uid://dexcwi87mobx2" path="res://World/SpaceBg.cs" id="2_j8job"]
 [ext_resource type="Script" uid="uid://8e604vcwjhag" path="res://World/BulletBoundary.cs" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://clil8i3ij5e3h" path="res://Enemies/V1/EnemyV1.tscn" id="6_bkhv4"]
+[ext_resource type="Texture2D" uid="uid://du202p7x25kpg" path="res://World/Assets/green-heathbar-empty.png" id="7_eidgh"]
+[ext_resource type="Texture2D" uid="uid://qyef4gl8ufkm" path="res://World/Assets/green-heathbar.png" id="8_oe8m4"]
+[ext_resource type="Script" uid="uid://5cmrb0eaix0i" path="res://World/PlayerHeathBar.cs" id="9_oe8m4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3f78f"]
 size = Vector2(1327, 821)
@@ -47,3 +50,16 @@ shape = SubResource("RectangleShape2D_3f78f")
 
 [node name="EnemyV1" parent="." instance=ExtResource("6_bkhv4")]
 position = Vector2(863, 317)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHeathBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 51.0
+offset_top = 587.0
+offset_right = 987.0
+offset_bottom = 658.0
+scale = Vector2(0.3, 0.3)
+value = 50.0
+texture_under = ExtResource("7_eidgh")
+texture_progress = ExtResource("8_oe8m4")
+script = ExtResource("9_oe8m4")

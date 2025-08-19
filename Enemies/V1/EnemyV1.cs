@@ -14,6 +14,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 	public const float AvoidanceWeight = 2.0f;
 
 	public float HeathPoint { get; private set; }
+	private TextureProgressBar _heathBar => GetNode<TextureProgressBar>("TextureProgressBar");
 
 	private float _curentSpeed = 0.0f;
 	private Vector2 _lastDirection = Vector2.Zero;
@@ -29,6 +30,9 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 		_player = GetTree().CurrentScene.GetNode<Player>("Player");
 		_meteorDetectionLayer.BodyEntered += MeteorEntered;
 		_meteorDetectionLayer.BodyExited += MeteorExited;
+		_heathBar.MaxValue = HeathPoint;
+		_heathBar.MinValue = 0;
+		_heathBar.Value = HeathPoint;
 		_curentSpeed = Speed;
 	}
 
@@ -36,7 +40,10 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 	{
 		if (_player == null) return;
 
-		LookAt(_player.GlobalPosition);
+		// Because the heathbar will rotate if use look at
+		// LookAt(_player.GlobalPosition);
+		GetNode<CollisionShape2D>("CollisionShape2D").LookAt(_player.GlobalPosition);
+		GetNode<Sprite2D>("Sprite2D").LookAt(_player.GlobalPosition);
 
 		// Calculate direction forces (normalized vectors)
 
@@ -187,6 +194,7 @@ public partial class EnemyV1 : CharacterBody2D, IHeathPoint
 	public void OnHeathChange(float damage)
 	{
 		HeathPoint -= damage;
+		_heathBar.Value = Math.Max(0, HeathPoint);
 		if (HeathPoint <= 0) QueueFree();
 	}
 }

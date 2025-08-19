@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://brkwc7ma5vm6g"]
 
 [ext_resource type="Script" uid="uid://b75krd310l001" path="res://Player/Player.cs" id="1_4ntmi"]
-[ext_resource type="Texture2D" uid="uid://cqmchsctgk0vx" path="res://Player/kenney_simple-space/PNG/Default/ship_H.png" id="2_btcbx"]
+[ext_resource type="Texture2D" uid="uid://cqmchsctgk0vx" path="res://Player/Assets/kenney_simple-space/PNG/Default/ship_H.png" id="2_4ntmi"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4flbx"]
 
@@ -9,7 +9,7 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_btcbx")
+"texture": ExtResource("2_4ntmi")
 }],
 "loop": true,
 "name": &"Idle",

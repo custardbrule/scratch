@@ -42,20 +42,17 @@ public partial class World : Node2D
 
 	private void CreateMeteor()
 	{
-		if (GetTree().GetNodesInGroup(MeteorFactory.GroupName).Count < 5)
+		var position = GetRandomPointOutsideCamera();
+		var direction = player.GlobalPosition - position;
+		var noiseDirection = direction.Rotated(rng.RandfRange(-1f, 1f));
+		var t = rng.RandiRange(1, 8);
+		BaseMeteor meteor = t switch
 		{
-			var position = GetRandomPointOutsideCamera();
-			var direction = player.GlobalPosition - position;
-			var noiseDirection = direction.Rotated(rng.RandfRange(-1f, 1f));
-			var t = rng.RandiRange(1, 8);
-			BaseMeteor meteor = t switch
-			{
-				1 => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
-				2 => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
-				_ => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
-			};
-			AddChild(meteor);
-		}
+			1 => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
+			2 => MeteorFactory.CreateMeteor<Meteor2>(position, noiseDirection),
+			_ => MeteorFactory.CreateMeteor<Meteor1>(position, noiseDirection),
+		};
+		AddChild(meteor);
 	}
 
 	private Vector2 GetRandomPointOutsideCamera()
